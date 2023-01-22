@@ -12,10 +12,11 @@ def day_repo_list_view(request):
 
 
 # 日報詳細表示
-def day_repo_detail_view(request):
+def day_repo_detail_view(request, number):
     template_name = "day_repo/day-repo-detail.html"
     random_int = randint(1, 10)
     context = {
+        "req_number": number,
         "random_number": random_int,
     }
     return render(request, template_name, context)

@@ -6,6 +6,6 @@ from day_repo.views import day_repo_list_view, day_repo_detail_view
 urlpatterns = [
     # 指定なし(day_repo/)
     path("", day_repo_list_view),
-    # 詳細表示(day_repo/detail/)
-    path("detail/", day_repo_detail_view),
+    # 詳細表示(day_repo/detail/[連番])
+    path("detail/<int:number>/", day_repo_detail_view),
 ]
