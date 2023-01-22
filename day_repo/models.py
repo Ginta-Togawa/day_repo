@@ -11,3 +11,7 @@ class ReportModel(models.Model):
     content = models.CharField('報告内容', max_length=1000)
     # 作成日時
     created_date_time = models.DateTimeField('作成日時', auto_now_add=True)
+
+    # タイトル表示
+    def __str__(self):
+        return self.title
