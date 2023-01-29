@@ -1,12 +1,9 @@
-<!doctype html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>乱数表示</title>
-</head>
-<body>
-<h1>乱数表示： {{random_number}}</h1>
-<h2>要求URL値表示： {{req_number}}</h2>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}ブロックタグで表示{% endblock %}
+
+{% block content %}
+<h1>今日のラッキーナンバーはこちら→ {{random_number}}</h1>
+<p>あなたの入力した数字は→ {{ number}} </p>
+<p> {{random_number}} + {{req_number}} = {{ random_number|add:req_number}}</p>
+{% endblock %}
