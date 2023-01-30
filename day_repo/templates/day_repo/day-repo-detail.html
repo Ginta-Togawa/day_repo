@@ -1,9 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}ブロックタグで表示{% endblock %}
+{% block title %}
+{% if delete_flag %}
+日報削除
+{% else %}
+日報詳細
+{% endif %}
+{% endblock %}
 
 {% block content %}
-<h1>今日のラッキーナンバーはこちら→ {{random_number}}</h1>
-<p>あなたの入力した数字は→ {{ number}} </p>
-<p> {{random_number}} + {{req_number}} = {{ random_number|add:req_number}}</p>
+{% if delete_flag %}
+<h1>日報削除</h1>
+<h2>下記データを削除します。</h2>
+{% else %}
+<h1>日報詳細</h1>
+{% endif %}
+<table border="1">
+    <tr>
+        <th>タイトル</th>
+        <td>{{ report_model.title }}</td>
+    </tr>
+    <tr>
+        <th>報告内容</th>
+        <td>{{ report_model.content }}</td>
+    </tr>
+    <tr>
+        <th>登録日時</th>
+        <td>{{ report_model.created_date_time }}</td>
+    </tr>
+</table>
+{% if delete_flag %}
+<a href="{% url 'day_repo_delete_execute' report_model.id %}">削除実行</a>
+<a href="{% url 'day_repo_detail' report_model.id %}">詳細に戻る</a>
+{% else %}
+<a href="{% url 'day_repo_edit_input' report_model.id %}">編集する</a>
+<a href="{% url 'day_repo_delete_confirm' report_model.id %}">削除する</a>
+{% endif %}
+<a href="{% url 'day_repo_list' %}">一覧に戻る</a>
 {% endblock %}

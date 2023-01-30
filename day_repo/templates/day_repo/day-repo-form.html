@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if id %}
+日報編集
+{% else %}
+日報作成
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% if id %}
+<h1>日報編集</h1>
+{% else %}
+<h1>日報登録</h1>
+{% endif %}
+
+{% if error_message %}
+<h3>{{ error_message }}</h3>
+{% endif %}
+
+{% if id %}
+<form action="{% url 'day_repo_edit_update' id %}" method="POST">
+    {% csrf_token %}
+    {{ report_form.as_p }}
+    <a>
+        <button type="submit">送信</button>
+    </a>
+    <a href="{% url 'day_repo_detail' id %}">詳細に戻る</a>
+</form>
+{% else %}
+<form action="{% url 'day_repo_create_register' %}" method="POST">
+    {% csrf_token %}
+    {{ report_form.as_p }}
+    <button type="submit">送信</button>
+</form>
+{% endif %}
+<a href="{% url 'day_repo_list' %}">一覧に戻る</a>
+
+{% endblock %}

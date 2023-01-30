@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}日報アプリ{% endblock %}
+{% block title %}日報一覧{% endblock %}
 
 {% block content %}
-<h1>こちらは日報アプリのページになります</h1>
-<p>ブロッックタグを使って表示してます</p>
+<h1>日報一覧</h1>
+<a href="{% url 'day_repo_create_input' %}">日報作成</a>
+<div>
+    <ul>
+        {% for report_model in report_model_list %}
+        <li><a href="{% url 'day_repo_detail' report_model.id %}">{{ report_model.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
