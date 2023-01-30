@@ -27,7 +27,8 @@
                 {% if delete_flag %}
                 <a href="{% url 'day_repo_delete_execute' report_model.id %}" class="btn btn-danger btn-sm"
                    class="btn btn-primary btn-sm">削除</a>
-                <a href="{% url 'day_repo_detail' report_model.id %}" class="btn btn-primary btn-sm">詳細に戻る</a>
+                <a href="{% url 'day_repo_detail' report_model.id %}"
+                   class="btn btn-primary btn-sm float-right">詳細に戻る</a>
                 {% else %}
                 <a href="{% url 'day_repo_edit_input' report_model.id %}" class="btn btn-primary btn-sm">編集</a>
                 <a href="{% url 'day_repo_delete_confirm' report_model.id %}" class="btn btn-danger btn-sm">削除</a>

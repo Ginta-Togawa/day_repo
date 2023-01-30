@@ -5,22 +5,16 @@ from day_repo.models import ImageUpload
 
 # 登録画面のフォーム
 class ReportForm(forms.Form):
-    title = forms.CharField(
-        label="タイトル",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'タイトル...',
-            }
-        ),
-    )
-    content = forms.CharField(
-        label="内容",
-        widget=forms.Textarea(
-            attrs={
-                'placeholder': '内容...',
-            }
-        ),
-    )
+    # タイトル
+    title = forms.CharField()
+    # 内容
+    content = forms.CharField(widget=forms.Textarea())
+
+    # 入力画面の設定
+    def __init__(self, *args, **kwargs):
+        for field in self.base_fields.values():
+            field.widget.attrs.update({"class": "form-control"})
+        super().__init__(*args, **kwargs)
 
 
 # 画像アップロード用フォーム

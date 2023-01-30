@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container my-3" style="max-width:700px;">
 
     {% if id %}
     <h1 class="mt-3">日報編集</h1>
@@ -28,14 +28,14 @@
             <form action="{% url 'day_repo_edit_update' id %}" method="POST">
                 {% csrf_token %}
                 {{ report_form.as_p }}
-                <button class="btn btn-primary btn-sm mb-1" type="submit">送信</button>
+                <button class="form-control btn btn-primary mb-1" type="submit">更新</button>
                 <a href="{% url 'day_repo_detail' id %}" class="btn btn-primary btn-sm">詳細に戻る</a>
             </form>
             {% else %}
             <form action="{% url 'day_repo_create_register' %}" method="POST">
                 {% csrf_token %}
                 {{ report_form.as_p }}
-                <button class="btn btn-primary btn-sm mb-1" type="submit">送信</button>
+                <button class="form-control btn btn-primary" type="submit">登録</button>
             </form>
             {% endif %}
         </div>
