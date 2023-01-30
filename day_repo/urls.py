@@ -20,4 +20,6 @@ urlpatterns = [
     path("edit/delete/confirm/<int:id>/", day_repo_delete_confirm_view, name="day_repo_delete_confirm"),
     # 日報削除実行
     path("edit/delete/execute/<int:id>/", day_repo_delete_execute_view, name="day_repo_delete_execute"),
+    # 画像アップロード画面
+    path("image-upload/", ImageUploadView.as_view(), name="image-upload"),
 ]

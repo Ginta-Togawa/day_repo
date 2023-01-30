@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import CreateView
 
-from day_repo.forms import ReportForm
+from day_repo.forms import ReportForm, ImageUploadForm
 from day_repo.models import ReportModel
 
 
@@ -159,3 +160,10 @@ def day_repo_delete_execute_view(request, id):
     select_result.delete()
     # 一覧画面にリダイレクト
     return redirect("day_repo_list")
+
+
+# 画像アップロード(ディレクトリ)
+class ImageUploadView(CreateView):
+    form_class = ImageUploadForm
+    template_name = "day_repo/image-upload.html"
+    success_url = "/day_repo"

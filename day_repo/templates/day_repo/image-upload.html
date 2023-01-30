@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+画像アップロード
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-3">画像アップロード</h1>
+    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary btn-sm mb-1" type="submit">送信</button>
+    </form>
+</div>
+{% endblock %}
