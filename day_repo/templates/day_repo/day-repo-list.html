@@ -25,11 +25,12 @@
             <a href="{% url 'day_repo_edit_input' report_model.id %}" class="card-link">
                 編集
             </a>
-            <a href="{% url 'day_repo_delete_confirm' report_model.id %}" class="card-link">
-                削除
-            </a>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal-{{report_model.id}}">削除
+            </button>
         </div>
     </div>
+    {% include "day_repo/day-repo-delete.html" with object=report_model %}
     {% endfor %}
 </div>
 {% endblock %}

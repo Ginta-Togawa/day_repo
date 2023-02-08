@@ -17,9 +17,9 @@ urlpatterns = [
     # 日報編集更新
     path("edit/update/<int:id>/", day_repo_edit_update_view, name="day_repo_edit_update"),
     # 日報削除確認
-    path("edit/delete/confirm/<int:id>/", day_repo_delete_confirm_view, name="day_repo_delete_confirm"),
+    path("delete/confirm/<int:id>/", day_repo_delete_confirm_view, name="day_repo_delete_confirm"),
     # 日報削除実行
-    path("edit/delete/execute/<int:id>/", day_repo_delete_execute_view, name="day_repo_delete_execute"),
+    path("delete/execute/<int:id>/", day_repo_delete_execute_view, name="day_repo_delete_execute"),
     # 画像アップロード画面
     path("image-upload/", ImageUploadView.as_view(), name="image-upload"),
 ]

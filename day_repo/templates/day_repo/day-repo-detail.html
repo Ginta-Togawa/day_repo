@@ -31,7 +31,10 @@
                    class="btn btn-primary btn-sm float-right">詳細に戻る</a>
                 {% else %}
                 <a href="{% url 'day_repo_edit_input' report_model.id %}" class="btn btn-primary btn-sm">編集</a>
-                <a href="{% url 'day_repo_delete_confirm' report_model.id %}" class="btn btn-danger btn-sm">削除</a>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal-{{report_model.id}}">削除
+                </button>
+                {% include 'day_repo/day-repo-delete.html' %}
                 {% endif %}
             </div>
         </div>
