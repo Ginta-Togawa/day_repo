@@ -5,7 +5,7 @@ from day_repo.views import *
 # URLパターン(day_repo配下)
 urlpatterns = [
     # 一覧表示
-    path("", day_repo_list_view, name="day_repo_list"),
+    path("", ReportModeListView.as_view(), name="day_repo_list"),
     # 詳細表示(パラメータにID)
     path("detail/<int:id>/", day_repo_detail_view, name="day_repo_detail"),
     # 日報作成入力

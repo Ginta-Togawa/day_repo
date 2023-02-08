@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from day_repo.forms import ReportForm, ImageUploadForm
 from day_repo.models import ReportModel
@@ -8,18 +8,12 @@ from day_repo.models import ReportModel
 # Create your views here.
 
 # 日報一覧表示
-def day_repo_list_view(request):
-    # DBからの検索(全件取得)
-    select_result = ReportModel.objects.all()
-
-    context = {
-        # 一覧データをレスポンスに設定
-        "report_model_list": select_result,
-    }
-
-    # 一覧画面に遷移
+# 1.modelで指定したデータベーステーブルからQuerySetを取得する
+# 2.「object_list」という変数にQuerySetを格納する
+# 3.HTMLテンプレートへコンテキストとしてQuerySetを渡す
+class ReportModeListView(ListView):  # クラス作成
     template_name = "day_repo/day-repo-list.html"
-    return render(request, template_name, context)
+    model = ReportModel
 
 
 # 日報詳細表示
