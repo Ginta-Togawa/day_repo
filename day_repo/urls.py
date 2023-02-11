@@ -1,6 +1,13 @@
 from django.urls import path
 
-from day_repo.views import *
+from day_repo.views import (
+    ReportModeListView,
+    ReportModelDetailView,
+    ReportModelFormCreateView,
+    ReportModelFormUpdateView,
+    ReportModelFormDeleteView,
+    ImageUploadView
+)
 
 # URLパターン(day_repo配下)
 urlpatterns = [
@@ -13,7 +20,7 @@ urlpatterns = [
     # 日報編集
     path("edit/<int:pk>/", ReportModelFormUpdateView.as_view(), name="day_repo_edit"),
     # 日報削除
-    path("delete/execute/<int:id>/", day_repo_delete_execute_view, name="day_repo_delete_execute"),
+    path("delete/<int:pk>/", ReportModelFormDeleteView.as_view(), name="day_repo_delete"),
     # 画像アップロード画面
     path("image-upload/", ImageUploadView.as_view(), name="image-upload"),
 ]
