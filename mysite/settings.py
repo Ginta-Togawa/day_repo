@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'day_repo'アプリをDjangoに追加
     'day_repo',
+    # 'accounts'アプリをDjangoに追加
+    'accounts',
 ]
 
 MIDDLEWARE = [
