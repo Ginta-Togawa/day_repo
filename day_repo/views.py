@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
@@ -39,23 +39,6 @@ class ReportModelFormUpdateView(UpdateView):
     model = ReportModel
     form_class = ReportModelForm
     success_url = reverse_lazy('day_repo_list')
-
-
-# 日報削除確認
-def day_repo_delete_confirm_view(request, id):
-    # DBからの検索(ID指定取得)
-    select_result = get_object_or_404(ReportModel, pk=id)
-
-    context = {
-        # 削除フラグを設定
-        "delete_flag": True,
-        # 詳細データをレスポンスに設定
-        "report_model": select_result,
-    }
-
-    # 詳細画面に遷移
-    template_name = "day_repo/day-repo-detail.html"
-    return render(request, template_name, context)
 
 
 # 日報削除確認

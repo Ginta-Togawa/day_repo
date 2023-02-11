@@ -12,9 +12,7 @@ urlpatterns = [
     path("create/", ReportModelFormCreateView.as_view(), name="day_repo_create"),
     # 日報編集
     path("edit/<int:pk>/", ReportModelFormUpdateView.as_view(), name="day_repo_edit"),
-    # 日報削除確認
-    path("delete/confirm/<int:id>/", day_repo_delete_confirm_view, name="day_repo_delete_confirm"),
-    # 日報削除実行
+    # 日報削除
     path("delete/execute/<int:id>/", day_repo_delete_execute_view, name="day_repo_delete_execute"),
     # 画像アップロード画面
     path("image-upload/", ImageUploadView.as_view(), name="image-upload"),
