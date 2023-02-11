@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import CreateView, ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DetailView, FormView
 
 from day_repo.forms import ReportForm, ImageUploadForm
 from day_repo.models import ReportModel
@@ -25,44 +26,18 @@ class ReportModelDetailView(DetailView):
     model = ReportModel
 
 
-# 日報作成入力
-def day_repo_create_input_view(request):
-    context = {
-        # 日報フォームクラスをレスポンスに設定
-        "report_form": ReportForm,
-    }
-
-    # フォーム画面に遷移
+# 日報作成入力・登録
+class ReportModelCreateFormView(FormView):
     template_name = "day_repo/day-repo-form.html"
-    return render(request, template_name, context)
+    form_class = ReportForm
+    success_url = reverse_lazy('day_repo_list')
 
-
-# 日報作成登録
-def day_repo_create_register_view(request):
-    # リクエストデータをもとにフォームを作成(空の場合も作成)
-    report_form = ReportForm(request.POST or None)
-
-    # フォームのバリデーションチェック結果で問題がない場合に登録処理を行う
-    if report_form.is_valid():
-        # リクエストデータからインスタンスを生成
-        report_model = ReportModel(
-            title=report_form.cleaned_data["title"],
-            content=report_form.cleaned_data["content"]
-        )
-        # DBに登録
-        report_model.save()
-        # 一覧画面にリダイレクト
-        return redirect("day_repo_list")
-
-    # バリデーションチェック結果に問題がある場合、エラーメッセージを設定して応答
-    context = {
-        "report_form": report_form,
-        "error_message": "入力内容に誤りがあります。",
-    }
-
-    # フォーム画面に遷移
-    template_name = "day_repo/day-repo-form.html"
-    return render(request, template_name, context)
+    # バリデーションチェック成功時の処理
+    def form_valid(self, form):
+        data = form.cleaned_data
+        obj = ReportModel(**data)
+        obj.save()
+        return super().form_valid(form)
 
 
 # 日報編集入力

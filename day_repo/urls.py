@@ -9,9 +9,7 @@ urlpatterns = [
     # 詳細表示(パラメータにPK)
     path("detail/<int:pk>/", ReportModelDetailView.as_view(), name="day_repo_detail"),
     # 日報作成入力
-    path("create/input/", day_repo_create_input_view, name="day_repo_create_input"),
-    # 日報作成登録
-    path("create/register/", day_repo_create_register_view, name="day_repo_create_register"),
+    path("create/input/", ReportModelCreateFormView.as_view(), name="day_repo_create_input"),
     # 日報編集入力
     path("edit/input/<int:id>/", day_repo_edit_input_view, name="day_repo_edit_input"),
     # 日報編集更新

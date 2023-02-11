@@ -32,9 +32,9 @@
                 <a href="{% url 'day_repo_detail' id %}" class="btn btn-primary btn-sm">詳細に戻る</a>
             </form>
             {% else %}
-            <form action="{% url 'day_repo_create_register' %}" method="POST">
+            <form method="POST">
                 {% csrf_token %}
-                {{ report_form.as_p }}
+                {{ form.as_p }}
                 <button class="form-control btn btn-primary" type="submit">登録</button>
             </form>
             {% endif %}
