@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, FormView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
-from day_repo.forms import ReportForm, ImageUploadForm
+from day_repo.forms import ImageUploadForm, ReportModelForm
 from day_repo.models import ReportModel
 
 
@@ -27,75 +27,18 @@ class ReportModelDetailView(DetailView):
 
 
 # 日報作成入力・登録
-class ReportModelCreateFormView(FormView):
+class ReportModelFormCreateView(CreateView):
     template_name = "day_repo/day-repo-form.html"
-    form_class = ReportForm
+    form_class = ReportModelForm
     success_url = reverse_lazy('day_repo_list')
 
-    # バリデーションチェック成功時の処理
-    def form_valid(self, form):
-        data = form.cleaned_data
-        obj = ReportModel(**data)
-        obj.save()
-        return super().form_valid(form)
 
-
-# 日報編集入力
-def day_repo_edit_input_view(request, id):
-    # DBからの検索(ID指定取得)
-    select_result = get_object_or_404(ReportModel, pk=id)
-
-    # 検索結果を基に更新画面フォームのインスタンスを生成
-    report_form = ReportForm(
-        {
-            "title": select_result.title,
-            "content": select_result.content,
-        }
-    )
-
-    # 応答データへの設定
-    context = {
-        # 更新対象のID
-        "id": id,
-        # 日報フォームクラスを返却値に設定
-        "report_form": report_form,
-    }
-
-    # フォーム画面に遷移
+# 日報編集入力・更新
+class ReportModelFormUpdateView(UpdateView):
     template_name = "day_repo/day-repo-form.html"
-    return render(request, template_name, context)
-
-
-# 日報編集更新
-def day_repo_edit_update_view(request, id):
-    # DBからの検索(ID指定取得)
-    select_result = get_object_or_404(ReportModel, pk=id)
-
-    # 更新内容、もしくは、検索結果を基に更新データフォームのインスタンスを生成
-    report_form = ReportForm(
-        request.POST or {
-            "title": select_result.title,
-            "content": select_result.content,
-        }
-    )
-
-    # フォームのバリデーションチェック結果で問題がない場合に登録処理を行う
-    if report_form.is_valid():
-        update_data = select_result
-        update_data.title = report_form.cleaned_data["title"]
-        update_data.content = report_form.cleaned_data["content"]
-        update_data.save()
-        # 詳細画面にリダイレクト
-        return redirect("day_repo_detail", id)
-
-    # バリデーションチェック結果に問題がある場合、エラーメッセージを設定して応答
-    context = {
-        "report_form": report_form,
-        "error_message": "入力内容に誤りがあります。",
-    }
-    # フォーム画面に遷移
-    template_name = "day_repo/day-repo-form.html"
-    return render(request, template_name, context)
+    model = ReportModel
+    form_class = ReportModelForm
+    success_url = reverse_lazy('day_repo_list')
 
 
 # 日報削除確認

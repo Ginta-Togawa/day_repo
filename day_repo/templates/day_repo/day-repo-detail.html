@@ -30,7 +30,7 @@
                 <a href="{% url 'day_repo_detail' object.id %}"
                    class="btn btn-primary btn-sm float-right">詳細に戻る</a>
                 {% else %}
-                <a href="{% url 'day_repo_edit_input' object.id %}" class="btn btn-primary btn-sm">編集</a>
+                <a href="{% url 'day_repo_edit' object.id %}" class="btn btn-primary btn-sm">編集</a>
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                         data-bs-target="#deleteModal-{{object.id}}">削除
                 </button>

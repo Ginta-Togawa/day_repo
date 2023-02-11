@@ -1,19 +1,17 @@
 from django import forms
 
-from day_repo.models import ImageUpload
+from day_repo.models import ImageUpload, ReportModel
 
 
-# 登録画面のフォーム
-class ReportForm(forms.Form):
-    # タイトル
-    title = forms.CharField(label="タイトル")
-    # 内容
-    content = forms.CharField(label="内容", widget=forms.Textarea())
+# 作成・編集画面のフォーム
+class ReportModelForm(forms.ModelForm):
+    class Meta:
+        model = ReportModel
+        fields = "__all__"
 
-    # 入力画面の設定
     def __init__(self, *args, **kwargs):
         for field in self.base_fields.values():
-            field.widget.attrs.update({"class": "form-control"})
+            field.widget.attrs["class"] = "form-control"
         super().__init__(*args, **kwargs)
 
 
