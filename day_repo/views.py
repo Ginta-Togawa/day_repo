@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 
 from day_repo.forms import ReportForm, ImageUploadForm
 from day_repo.models import ReportModel
@@ -17,18 +17,12 @@ class ReportModeListView(ListView):  # クラス作成
 
 
 # 日報詳細表示
-def day_repo_detail_view(request, id):
-    # DBからの検索(ID指定取得)
-    select_result = get_object_or_404(ReportModel, pk=id)
-
-    context = {
-        # 詳細データをレスポンスに設定
-        "report_model": select_result,
-    }
-
-    # 詳細画面に遷移
+# 1.ブラウザから「pk」を受け取る
+# 2.データベースから「pk」が一致するデータを取り出す
+# 3.コンテキストとしてHTMLテンプレートへ渡す
+class ReportModelDetailView(DetailView):
     template_name = "day_repo/day-repo-detail.html"
-    return render(request, template_name, context)
+    model = ReportModel
 
 
 # 日報作成入力
