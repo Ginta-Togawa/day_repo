@@ -1,0 +1,5 @@
+# テーブル生成用のmigrationsフォルダ
+/accounts/migrations/
+/day_repo/migrations/
+# 画像アップロードフォルダ
+/media_local/images/
