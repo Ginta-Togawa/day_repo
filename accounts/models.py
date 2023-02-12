@@ -43,6 +43,11 @@ class UserManager(BaseUserManager):
 
 # 自作Userモデル
 class User(AbstractBaseUser):
+    # 管理画面表示用設定
+    class Meta:
+        verbose_name = "ユーザ"
+        verbose_name_plural = "ユーザ一覧"
+
     # メールアドレス
     email = models.EmailField(
         verbose_name='Eメールアドレス',
@@ -56,6 +61,7 @@ class User(AbstractBaseUser):
     # 管理者フラグ
     admin = models.BooleanField(default=False)
 
+    # メールアドレスのキー化
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
