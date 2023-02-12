@@ -132,3 +132,5 @@ STATICFILES_DIRS = [BASE_DIR / "static_local"]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media_local"
+
+AUTH_USER_MODEL = 'accounts.User'
