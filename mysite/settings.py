@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'day_repo',
     # 'accounts'アプリをDjangoに追加
     'accounts',
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -174,3 +175,5 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 # Emailをターミナル表示
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
