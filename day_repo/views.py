@@ -31,6 +31,12 @@ class ReportModelFormCreateView(CreateView):
     form_class = ReportModelForm
     success_url = reverse_lazy('day_repo_list')
 
+    # formクラスへのユーザ情報を渡す
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
 
 # 日報編集入力・更新
 class ReportModelFormUpdateView(UpdateView):
