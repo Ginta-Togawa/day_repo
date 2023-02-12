@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # ユーザ認証用ライブラリ
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     # 'day_repo'アプリをDjangoに追加
     'day_repo',
     # 'accounts'アプリをDjangoに追加
@@ -64,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # ユーザ認証用ライブラリ
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -134,3 +143,34 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media_local"
 
 AUTH_USER_MODEL = 'accounts.User'
+
+# ユーザ認証用ライブラリ
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+# 認証時にユーザーネームは使用しない
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+
+# 認証時にメールアドレスを使用する
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+
+# ログイン後のリダイレクト先
+LOGIN_REDIRECT_URL = reverse_lazy('day_repo_list')
+
+# ログアウト後のリダイレクト先
+ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy("account_login")
+
+# メールアドレス確認済みの会員のみ利用可
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+# ログアウト時に確認を求めない
+ACCOUNT_LOGOUT_ON_GET = True
+
+# Emailをターミナル表示
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

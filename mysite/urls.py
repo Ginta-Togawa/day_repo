@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 'day_repo/'を'day_repo'下の'urls.py'に紐づけ
     path('day_repo/', include('day_repo.urls')),
+    # アカウント管理ページとアプリを紐づけ
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:
