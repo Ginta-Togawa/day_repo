@@ -92,3 +92,27 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
+
+
+# ユーザモデルの拡張項目
+class Profile(models.Model):
+    # 紐づけ元Userモデル
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # ユーザ名
+    username = models.CharField(max_length=100, verbose_name="ユーザー名")
+    # 部署名
+    department = models.CharField(max_length=100, blank=True, null=True, verbose_name="部署")
+    # 電話番号
+    phone_number = models.IntegerField(blank=True, null=True, verbose_name="携帯番号")
+    # 性別
+    gender = models.CharField(max_length=1, default=None, verbose_name="性別", blank=True, null=True, choices=[
+        (None, "--"),
+        ("m", "男性"),
+        ("f", "女性")
+    ])
+    # 誕生日
+    birthday = models.DateField(blank=True, null=True, verbose_name="生年月日")
+
+    # コンストラクタ
+    def __str__(self):
+        return self.username
