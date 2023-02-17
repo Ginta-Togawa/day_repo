@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    # メッセージフレームワークで必要な設定
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # ユーザ認証用ライブラリ
@@ -51,10 +52,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # メッセージフレームワークで必要な設定
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # メッセージフレームワークで必要な設定
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -71,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                # メッセージフレームワークで必要な設定
                 'django.contrib.messages.context_processors.messages',
                 # ユーザ認証用ライブラリ
                 'django.template.context_processors.request',

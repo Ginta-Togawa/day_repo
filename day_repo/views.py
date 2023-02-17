@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -19,6 +20,7 @@ class OwnerOnly(UserPassesTestMixin):
 
     # 権限がない場合、詳細ページに遷移
     def handle_no_permission(self):
+        messages.error(self.request, "編集・削除はご自身の日報のみ可能です。")
         return redirect("day_repo_detail", pk=self.kwargs["pk"])
 
 
