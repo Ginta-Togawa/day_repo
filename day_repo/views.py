@@ -28,7 +28,7 @@ class OwnerOnly(UserPassesTestMixin):
 # 1.modelで指定したデータベーステーブルからQuerySetを取得する
 # 2.「object_list」という変数にQuerySetを格納する
 # 3.HTMLテンプレートへコンテキストとしてQuerySetを渡す
-class ReportModeListView(LoginRequiredMixin, ListView):
+class ReportModeListView(ListView):
     template_name = "day_repo/day-repo-list.html"
     model = ReportModel
 
@@ -37,7 +37,7 @@ class ReportModeListView(LoginRequiredMixin, ListView):
 # 1.ブラウザから「pk」を受け取る
 # 2.データベースから「pk」が一致するデータを取り出す
 # 3.コンテキストとしてHTMLテンプレートへ渡す
-class ReportModelDetailView(LoginRequiredMixin, DetailView):
+class ReportModelDetailView(DetailView):
     template_name = "day_repo/day-repo-detail.html"
     model = ReportModel
 
