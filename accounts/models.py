@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
+from django.db.models.signals import post_save
 
 
 # Userモデルのモデルマネージャー
@@ -116,3 +117,14 @@ class Profile(models.Model):
     # コンストラクタ
     def __str__(self):
         return self.username
+
+
+# Userクラス保存後に、その他属性を保持しているProfileも自動作成するメソッド
+def post_user_created(sender, instance, created, **kwargs):
+    if created:
+        profile_obj = Profile(user=instance)
+        # profile_obj.username = instance.email
+        profile_obj.save()
+
+
+post_save.connect(post_user_created, sender=User)

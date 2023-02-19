@@ -60,3 +60,10 @@ class CustomAdminChangeForm(UserChangeForm):
         if commit:
             user_obj.save()
         return user_obj
+
+
+# プロファイル更新用フォーム
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ["user"]

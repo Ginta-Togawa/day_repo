@@ -24,6 +24,7 @@ urlpatterns = [
     path('day_repo/', include('day_repo.urls')),
     # アカウント管理ページとアプリを紐づけ
     path('accounts/', include('allauth.urls')),
+    path("profile/", include("accounts.urls")),
 ]
 
 if settings.DEBUG:
