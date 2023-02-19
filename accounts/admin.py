@@ -1,11 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
+from .forms import CustomAdminChangeForm
 from .models import User
 
 
 # 管理画面上のユーザモデル設定
 class UserAdmin(BaseUserAdmin):
+    # フォームクラスと紐づけ
+    form = CustomAdminChangeForm
+
     # 一覧表示
     list_display = (
         "email",
@@ -37,6 +41,13 @@ class UserAdmin(BaseUserAdmin):
     # ユーザ更新時の入力項目
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
+        ('プロフィール', {'fields': (
+            'username',
+            'department',
+            'phone_number',
+            'gender',
+            'birthday',
+        )}),
         ('Permissions', {'fields': ('staff', 'admin',)}),
     )
 
