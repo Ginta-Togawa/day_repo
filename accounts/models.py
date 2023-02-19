@@ -94,6 +94,9 @@ class User(AbstractBaseUser):
         return self.active
 
 
+GENDER_CHOICE = [(None, "--"), ("m", "男性"), ("f", "女性")]
+
+
 # ユーザモデルの拡張項目
 class Profile(models.Model):
     # 紐づけ元Userモデル
@@ -105,11 +108,8 @@ class Profile(models.Model):
     # 電話番号
     phone_number = models.IntegerField(blank=True, null=True, verbose_name="携帯番号")
     # 性別
-    gender = models.CharField(max_length=1, default=None, verbose_name="性別", blank=True, null=True, choices=[
-        (None, "--"),
-        ("m", "男性"),
-        ("f", "女性")
-    ])
+    gender = models.CharField(max_length=1, default=None, verbose_name="性別", blank=True, null=True,
+                              choices=GENDER_CHOICE, )
     # 誕生日
     birthday = models.DateField(blank=True, null=True, verbose_name="生年月日")
 
