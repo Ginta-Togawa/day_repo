@@ -184,3 +184,6 @@ ACCOUNT_LOGOUT_ON_GET = True
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# 自作自動遷移用クラスの設定
+ACCOUNT_ADAPTER = "accounts.adapter.MyDayRepoAdapter"
