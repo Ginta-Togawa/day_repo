@@ -39,6 +39,9 @@
             {% else %}
             <span class="badge bg-secondary">{{ report_model.user.profile.username }}</span>
             {% endif %}
+            {% if not report_model.release_flag %}
+            (非公開)
+            {% endif %}
         </div>
     </div>
     {% endfor %}

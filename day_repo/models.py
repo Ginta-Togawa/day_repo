@@ -13,10 +13,11 @@ User = get_user_model()
 class ReportModelQuerySet(models.QuerySet):
 
     # 検索処理
-    def search(self, query=None):
+    def search(self, user_id, query=None):
         qs = self
-        # 公開フラグでフィルター
-        qs = qs.filter(release_flag=True)
+        # 公開フラグとユーザIDでフィルター
+        or_lookup = (Q(release_flag=True) | Q(user_id=user_id))
+        qs = qs.filter(or_lookup)
         if query is not None:
             or_lookup = (Q(title__icontains=query) | Q(content__icontains=query))
             qs = qs.filter(or_lookup).distinct()
@@ -31,8 +32,8 @@ class ReportModelManager(models.Manager):
         return ReportModelQuerySet(self.model, using=self._db)
 
     # 検索
-    def search(self, query=None):
-        return self.get_queryset().search(query=query)
+    def search(self, user_id, query=None):
+        return self.get_queryset().search(query=query, user_id=user_id)
 
 
 # 日報モデルのslugデフォルト値設定

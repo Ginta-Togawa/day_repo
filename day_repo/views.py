@@ -34,11 +34,12 @@ class ReportModeListView(ListView):
 
     # 条件付き取得処理(自分の日報と公開可のものを表示)
     def get_queryset(self):
+        user_id = self.request.user.id
         try:
             q = self.request.GET["search"]
         except:
             q = None
-        return ReportModel.objects.search(query=q)
+        return ReportModel.objects.search(query=q, user_id=user_id)
 
 
 # 日報詳細表示
