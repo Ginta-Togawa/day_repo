@@ -1,9 +1,36 @@
 # Create your models here.
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Q
 
 # ユーザモデルの取得
 User = get_user_model()
+
+
+# 日報検索用QuerySetクラス
+class ReportModelQuerySet(models.QuerySet):
+
+    # 検索処理
+    def search(self, query=None):
+        qs = self
+        # 公開フラグでフィルター
+        qs = qs.filter(release_flag=True)
+        if query is not None:
+            or_lookup = (Q(title__icontains=query) | Q(content__icontains=query))
+            qs = qs.filter(or_lookup).distinct()
+        # 作成日時の降順
+        return qs.order_by("-created_date_time")
+
+
+# 日報モデル用マネージャークラス
+class ReportModelManager(models.Manager):
+    # 一覧取得
+    def get_queryset(self):
+        return ReportModelQuerySet(self.model, using=self._db)
+
+    # 検索
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
 
 
 # 日報モデル
@@ -23,6 +50,8 @@ class ReportModel(models.Model):
     created_date_time = models.DateTimeField('作成日時', auto_now_add=True)
     # 公開フラグ
     release_flag = models.BooleanField(verbose_name="公開する", default=False)
+
+    objects = ReportModelManager()
 
     # タイトル表示
     def __str__(self):

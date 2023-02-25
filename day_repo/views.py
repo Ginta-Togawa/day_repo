@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
@@ -35,18 +34,11 @@ class ReportModeListView(ListView):
 
     # 条件付き取得処理(自分の日報と公開可のものを表示)
     def get_queryset(self):
-        # 全聚徳
-        qs = ReportModel.objects.all()
-        # ログインユーザの場合、公開可と自身の全ての日報を表示
-        if self.request.user.is_authenticated:
-            qs = qs.filter(Q(release_flag=True) | Q(user=self.request.user))
-        # それ以外(ゲストユーザ)の場合、公開可のみ表示
-        else:
-            qs = qs.filter(release_flag=True)
-
-        # 作成日時の降順
-        qs = qs.order_by("-created_date_time")
-        return qs
+        try:
+            q = self.request.GET["search"]
+        except:
+            q = None
+        return ReportModel.objects.search(query=q)
 
 
 # 日報詳細表示
