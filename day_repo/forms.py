@@ -11,10 +11,16 @@ class ReportModelForm(forms.ModelForm):
         exclude = ["user"]
 
     def __init__(self, user=None, *args, **kwargs):
-        for field in self.base_fields.values():
-            field.widget.attrs["class"] = "form-control"
-            # 引数からユーザを設定
-            self.user = user
+        # 項目名単位にループ
+        for key, field in self.base_fields.items():
+            # "release_flag"の場合、Bootstrapの別クラス「form-check-input」を適用してチェックボックス化する。
+            if key == "release_flag":
+                field.widget.attrs["class"] = "form-check-input"
+            # それ以外の場合、Bootstrapの別クラス「form-control」を適用してテキストボックス化する。
+            else:
+                field.widget.attrs["class"] = "form-control"
+        # 引数からユーザを設定
+        self.user = user
         super().__init__(*args, **kwargs)
 
     # 登録処理

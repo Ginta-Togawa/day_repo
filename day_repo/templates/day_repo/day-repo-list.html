@@ -12,25 +12,35 @@
         </a>
     </div>
     {% for report_model in object_list %}
-    <div class="card my-3">
+    <div class="card my-3 mx-auto" style="max-width:700px;">
+        <div class="card-header">
+            {{ report_model.created_date_time|date:"Y年n年j日" }}
+        </div>
         <div class="card-body">
             <h5 class="card-title">
-                <a href="{% url 'day_repo_detail' report_model.id %}">
-                    {{ report_model.title }}
+                {% if report_model.user == request.user %}
+                <a href="{% url 'day_repo_edit' report_model.id %}">
+                    {{ report_model.title}}<span style="font-size:10px;">(編集)</span>
                 </a>
+                {% else %}
+                <a href="{% url 'day_repo_detail' report_model.id %}">
+                    {{ report_model.title}}
+                </a>
+                {% endif %}
             </h5>
             <p class="card-text">
                 {{ report_model.content }}
             </p>
-            <a href="{% url 'day_repo_edit' report_model.id %}" class="card-link">
-                編集
-            </a>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal-{{report_model.id}}">削除
-            </button>
+        </div>
+        <div class="card-footer">
+            by
+            {% if report_model.user == request.user %}
+            <span class="badge bg-primary">あなた</span>
+            {% else %}
+            <span class="badge bg-secondary">{{ report_model.user.profile.username }}</span>
+            {% endif %}
         </div>
     </div>
-    {% include "day_repo/day-repo-delete.html" with object=report_model %}
     {% endfor %}
 </div>
 {% endblock %}

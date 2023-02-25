@@ -21,6 +21,8 @@ class ReportModel(models.Model):
     content = models.TextField(verbose_name="報告内容", max_length=1000)
     # 作成日時
     created_date_time = models.DateTimeField('作成日時', auto_now_add=True)
+    # 公開フラグ
+    release_flag = models.BooleanField(verbose_name="公開する", default=False)
 
     # タイトル表示
     def __str__(self):

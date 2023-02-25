@@ -29,8 +29,12 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="form-control btn btn-primary mb-1" type="submit">更新</button>
-                <a href="{% url 'day_repo_detail' object.id %}" class="btn btn-primary btn-sm">詳細に戻る</a>
             </form>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal-{{object.id}}">削除
+            </button>
+            {% include 'day_repo/day-repo-delete.html' %}
+            <a href="{% url 'day_repo_detail' object.id %}" class="btn btn-primary btn-sm">詳細に戻る</a>
             {% else %}
             <form method="POST">
                 {% csrf_token %}

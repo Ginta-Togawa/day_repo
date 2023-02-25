@@ -14,13 +14,6 @@
         <div class="card-body">
             <h3 class="card-title">{{ object.title }}</h3>
             <p class="card-text">{{ object.content }}</p>
-            <div class="w-50">
-                <a href="{% url 'day_repo_edit' object.id %}" class="btn btn-primary btn-sm">編集</a>
-                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal-{{object.id}}">削除
-                </button>
-                {% include 'day_repo/day-repo-delete.html' %}
-            </div>
         </div>
     </div>
 </div>
