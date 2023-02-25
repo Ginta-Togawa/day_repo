@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q
 
+from day_repo.utils.random_string import random_string_generator
+
 # ユーザモデルの取得
 User = get_user_model()
 
@@ -33,6 +35,17 @@ class ReportModelManager(models.Manager):
         return self.get_queryset().search(query=query)
 
 
+# 日報モデルのslugデフォルト値設定
+def slug_maker():
+    repeat = True
+    while repeat:
+        new_slug = random_string_generator()
+        counter = ReportModel.objects.filter(slug=new_slug).count()
+        if counter == 0:
+            repeat = False
+    return new_slug
+
+
 # 日報モデル
 class ReportModel(models.Model):
     class Meta:
@@ -50,6 +63,8 @@ class ReportModel(models.Model):
     created_date_time = models.DateTimeField('作成日時', auto_now_add=True)
     # 公開フラグ
     release_flag = models.BooleanField(verbose_name="公開する", default=False)
+    # スラッグ
+    slug = models.SlugField(max_length=20, unique=True, default=slug_maker)
 
     objects = ReportModelManager()
 

@@ -19,11 +19,11 @@
         <div class="card-body">
             <h5 class="card-title">
                 {% if report_model.user == request.user %}
-                <a href="{% url 'day_repo_edit' report_model.id %}">
+                <a href="{% url 'day_repo_edit' report_model.slug %}">
                     {{ report_model.title}}<span style="font-size:10px;">(編集)</span>
                 </a>
                 {% else %}
-                <a href="{% url 'day_repo_detail' report_model.id %}">
+                <a href="{% url 'day_repo_detail' report_model.slug %}">
                     {{ report_model.title}}
                 </a>
                 {% endif %}
