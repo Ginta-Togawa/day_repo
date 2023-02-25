@@ -7,8 +7,8 @@ from day_repo.models import ImageUpload, ReportModel
 class ReportModelForm(forms.ModelForm):
     class Meta:
         model = ReportModel
-        # ユーザはログイン情報から紐づけ
-        exclude = ["user"]
+        # ユーザはログイン情報から紐づけて、スラッグは自動採番のため、入力フォーム画面から除外
+        exclude = ["user", "slug"]
 
     def __init__(self, user=None, *args, **kwargs):
         # 項目名単位にループ
