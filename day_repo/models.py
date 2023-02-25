@@ -2,6 +2,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 from day_repo.utils.random_string import random_string_generator
 
@@ -58,6 +59,8 @@ class ReportModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # タイトル：100字以内
     title = models.CharField(verbose_name="タイトル", max_length=100)
+    # 報告日
+    date = models.DateField(default=timezone.now)
     # 報告内容：1000字以内
     content = models.TextField(verbose_name="報告内容", max_length=1000)
     # 作成日時

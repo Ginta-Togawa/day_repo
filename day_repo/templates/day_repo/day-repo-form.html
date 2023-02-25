@@ -27,6 +27,8 @@
             {% if object %}
             <form method="POST">
                 {% csrf_token %}
+                {% bootstrap_javascript jquery='full' %}
+                {{ form.media }}
                 {{ form.as_p }}
                 <button class="form-control btn btn-primary mb-1" type="submit">更新</button>
             </form>
@@ -37,6 +39,8 @@
             {% else %}
             <form method="POST">
                 {% csrf_token %}
+                {% bootstrap_javascript jquery='full' %}
+                {{ form.media }}
                 {{ form.as_p }}
                 <button class="form-control btn btn-primary" type="submit">登録</button>
             </form>

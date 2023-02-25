@@ -1,3 +1,4 @@
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from django import forms
 
 from day_repo.models import ImageUpload, ReportModel
@@ -5,6 +6,11 @@ from day_repo.models import ImageUpload, ReportModel
 
 # 作成・編集画面のフォーム
 class ReportModelForm(forms.ModelForm):
+    date = forms.DateField(
+        label="作成日",
+        widget=DatePickerInput(format='%Y-%m-%d')
+    )
+
     class Meta:
         model = ReportModel
         # ユーザはログイン情報から紐づけて、スラッグは自動採番のため、入力フォーム画面から除外

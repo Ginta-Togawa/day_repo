@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     # 'accounts'アプリをDjangoに追加
     'accounts',
     "crispy_forms",
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +80,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # ユーザ認証用ライブラリ
                 'django.template.context_processors.request',
+            ],
+            'builtins': [
+                'bootstrap4.templatetags.bootstrap4',
             ],
         },
     },
@@ -187,3 +192,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # 自作自動遷移用クラスの設定
 ACCOUNT_ADAPTER = "accounts.adapter.MyDayRepoAdapter"
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
