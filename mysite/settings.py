@@ -102,9 +102,9 @@ DATABASES = {
         'PASSWORD': 'django',
         'HOST': 'localhost',
         'PORT': '5432',
-        # 'OPTIONS': {
-        #     'options': '-c search_path=day_repo'
-        # },
+        'OPTIONS': {
+            'options': '-c search_path=day_repo'
+        },
         'TEST': {
             'NAME': 'test_db',
         },
