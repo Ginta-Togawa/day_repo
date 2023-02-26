@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
+from day_repo.filters import ReportModelFilter
 from day_repo.forms import ImageUploadForm, ReportModelForm
 from day_repo.models import ReportModel
 
@@ -40,6 +41,11 @@ class ReportModeListView(ListView):
         except:
             q = None
         return ReportModel.objects.search(query=q, user_id=user_id)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["filter"] = ReportModelFilter(self.request.GET, queryset=self.get_queryset())
+        return ctx
 
 
 # 日報詳細表示

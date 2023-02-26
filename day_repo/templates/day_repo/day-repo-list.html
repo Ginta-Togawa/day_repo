@@ -4,46 +4,46 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="mt-3 d-flex justify-content-between align-items-center">
-        <h1 class="mt-3">日報一覧</h1>
-        <a href="{% url 'day_repo_create' %}" class="btn btn-outline-primary float-right">
-            <i class="bi bi-plus"></i>
-        </a>
-    </div>
-    {% for report_model in object_list %}
-    <div class="card my-3 mx-auto" style="max-width:700px;">
-        <div class="card-header">
-            {{ report_model.created_date_time|date:"Y年n年j日" }}
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                {% if report_model.user == request.user %}
-                <a href="{% url 'day_repo_edit' report_model.slug %}">
-                    {{ report_model.title}}<span style="font-size:10px;">(編集)</span>
-                </a>
-                {% else %}
-                <a href="{% url 'day_repo_detail' report_model.slug %}">
-                    {{ report_model.title}}
-                </a>
+<div class="container d-flex justify-content-center flex-wrap-reverse py-3">
+    <div class="flex-grow-1">
+        {% if filter.qs %}
+        {% for object in filter.qs %}
+        <div class="card mx-auto mb-2" style="max-width:700px; min-width:300px;">
+            <div class="card-header">
+                {{ object.date|date:"Y年n年j日" }}
+                {% if not object.release_flag %}
+                <span class="badge bg-secondary">下書き</span>
                 {% endif %}
-            </h5>
-            <p class="card-text">
-                {{ report_model.content }}
-            </p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    {% if object.user == request.user %}
+                    <span class="float-end text-danger" data-bs-toggle="modal"
+                          data-bs-target="#deleteModal-{{object.slug}}">
+                        <i class="bi bi-trash-fill"></i>
+                    </span>
+                    <a href="{% url 'day_repo_edit' object.slug %}">{{ object.title }}</a>
+                    {% else %}
+                    <a href="{% url 'day_repo_detail' object.slug %}">{{ object.title }}</a>
+                    {% endif %}
+                </h5>
+                <p class="card-text">{{ object.content }}</p>
+            </div>
+            <div class="card-footer">by
+                {% if object.user == request.user %}
+                <span class="badge bg-primary">あなた</span>
+                {% else %}
+                <span class="badge bg-secondary">{{ object.user.profile.username }}</span>
+                {% endif %}
+            </div>
         </div>
-        <div class="card-footer">
-            by
-            {% if report_model.user == request.user %}
-            <span class="badge bg-primary">あなた</span>
-            {% else %}
-            <span class="badge bg-secondary">{{ report_model.user.profile.username }}</span>
-            {% endif %}
-            {% if not report_model.release_flag %}
-            (非公開)
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
+        {% include "day_repo/day-repo-delete.html" with object=object %}
+        {% endfor %}
+        {% else %}
+        <div>表示する日報がありません。</div>
+        {% endif %}
+    </div><!-- 一覧リストdiv終了-->
+    <!-- 右側を表示する -->
+    {% include 'day_repo/day-repo-filter.html' %}
 </div>
 {% endblock %}
