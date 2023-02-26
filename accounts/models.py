@@ -118,6 +118,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.username
 
+    def get_own_archive_url(self):
+        from django.urls import reverse_lazy
+        return reverse_lazy("day_repo_list") + f"?profile={self.id}"
+
 
 # Userクラス保存後に、その他属性を保持しているProfileも自動作成するメソッド
 def post_user_created(sender, instance, created, **kwargs):

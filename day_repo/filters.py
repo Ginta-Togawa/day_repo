@@ -28,6 +28,9 @@ class ReportModelFilter(django_filters.FilterSet):
         # セレクトボックスのHTML設定
         widget=Select(attrs={"class": "form-select"}))
 
+    #
+    profile = django_filters.NumberFilter(method="get_profile_day_repo")
+
     class Meta:
         # 元モデルクラス
         model = ReportModel
@@ -62,4 +65,13 @@ class ReportModelFilter(django_filters.FilterSet):
             qs = qs.filter(release_flag=True)
         elif value == "2":
             qs = qs.filter(release_flag=False)
+        return qs
+
+    def get_profile_day_repo(self, queryset, name, value):
+        from accounts.models import Profile
+        qs = queryset
+        if Profile.objects.filter(id=value).exists():
+            qs = qs.filter(user__profile__id=value)
+        else:
+            qs = qs.none()
         return qs

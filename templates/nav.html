@@ -1,7 +1,8 @@
-<nav class="navbar navbar-dark" style="background-color: #2e67aa!important;">
+{% load accounts_user %}
+<nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
         <div>
-            <a href="{% url 'day_repo_list' %}" class="navbar-brand" href="#">
+            <a href="{% url 'day_repo_list' %}" class="navbar-brand">
                 <img src="/media/pages/icon.png" style="width:50px;"/>
             </a>
         </div>
@@ -12,15 +13,18 @@
             </form>
         </div>
         <div class="text-light nav-item dropdown">
-            {% load accounts_user %}
-            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
-                {{ request.user|user_display}}
+            <a class="nav-link dropdown-toggle text-light" id="navbarDropdown"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ request.user|user_display }}
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu endposition" aria-labelledby="navbarDropdown">
                 {% if request.user.is_authenticated %}
                 <li><a class="dropdown-item" href="{% url 'profile-update' request.user.profile.id %}">アカウント設定</a>
                 </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href={{request.user.profile.get_own_archive_url}}>あなたの日報一覧</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>

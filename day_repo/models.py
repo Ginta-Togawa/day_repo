@@ -76,6 +76,10 @@ class ReportModel(models.Model):
     def __str__(self):
         return self.title
 
+    def get_profile_page_url(self):
+        from django.urls import reverse_lazy
+        return reverse_lazy("day_repo_list") + f"?profile={self.user.profile.id}"
+
 
 # 画像アップロード用モデル
 class ImageUpload(models.Model):
