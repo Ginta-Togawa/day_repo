@@ -9,19 +9,29 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from django.urls import reverse_lazy
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+# アプリフォルダ(PycharmProjects\day_repo)のパス
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# プロジェクトフォルダ(PycharmProjects)のパス
+PARENT_DIR = BASE_DIR.parent
+
+# 環境変数定義ファイル(.env)の読み込みと環境変数への設定
+env_path = BASE_DIR / "auth/.env"
+load_dotenv(env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t5qv!xzp#_dk=f)2hjwv57p)*dzkd7#yw7m3(==k=j(^4x37ki'
+# シークレットキーを環境変数から設定
+SECRET_KEY = os.environ.get("secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,16 +104,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# 各種接続先情報を環境変数から設定
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'django',
+        'NAME': os.environ.get("db_name"),
+        'USER': os.environ.get("db_user"),
+        'PASSWORD': os.environ.get("db_password"),
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {
-            'options': '-c search_path=day_repo'
+            'options': '-c search_path=' + os.environ.get("db_schema")
         },
         'TEST': {
             'NAME': 'test_db',
