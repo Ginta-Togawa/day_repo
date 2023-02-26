@@ -54,7 +54,6 @@ class ReportModelFilter(django_filters.FilterSet):
         qs = queryset
         if value is not None:
             year, month = eval(value)
-            print(year, month)
             qs = queryset.filter(date__year=year).filter(date__month=month)
         return qs
 
